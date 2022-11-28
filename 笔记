@@ -1,0 +1,43 @@
+1.jedis操作redis：
+    1.导入依赖：
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+    2.获取连接Jedis jedis = new Jedis("localhost",6379);
+    3.执行操作jedis.set("name","zukedegou");
+    4.关闭连接jedis.close();
+2.springboot操作redis:
+    1.倒入坐标：
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+    2.配置yml文件：
+        spring:
+          application:
+            name: springdataredis_demo
+          #redis相关配置
+          data:
+            redis:
+              host: localhost
+              port: 6379
+              #密码password: 123456
+              #默认提供16个数据库，且默认0，这里的意思是选择0号数据库
+              database: 0
+              jedis:
+                #redis连接池配置
+                pool:
+                  #最大连接数
+                  max-active: 8
+                  #连接池最大阻塞等待时间
+                  max-wait: 1ms
+                  #连接池中最大空闲连接
+                  max-idle: 4
+                  #连接池中最小空闲连接
+                  min-idle: 0
+    3.导入类：
+	@Autowired
+   	 private RedisTemplate redisTemplate;
+    4.导入配置类
